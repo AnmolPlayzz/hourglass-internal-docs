@@ -1,0 +1,113 @@
+# 🖥️ Desktop Deployment (Electron Forge)
+
+This guide covers how to build and release the Time Tracker desktop app using Electron Forge, either automatically (via GitHub Actions) or manually (on your machine).
+
+---
+
+## ⚙️ Option 1: Automatic Build (GitHub Actions)
+
+The recommended way to build and release production-ready installers.
+
+### 🏷 Step 1 — Create a Version Tag
+
+To trigger a build, push a Git tag that starts with `v` (e.g. `v1.0.0`):
+
+```sh
+git add .
+git commit -m "Release: v1.0.0"
+git tag v1.0.0
+git push origin main --tags
+````
+
+> ✅ Any tag starting with `v` triggers the deployment workflow on GitHub Actions.
+
+### 🚀 What Happens Next
+
+Your CI pipeline will:
+
+* Install dependencies
+* Build the app with `electron-forge`
+* Package installers for all supported platforms
+* (Optional) Sign and notarize builds
+* Upload release artifacts (e.g. to GitHub Releases)
+
+You can monitor builds under the **Actions** tab or with:
+
+```sh
+gh run list
+```
+
+---
+
+## 🛠 Option 2: Manual Build (Local Machine)
+
+Use this if you're testing locally or need a quick dev build.
+
+### 🧰 Step 1 — Install Dependencies
+
+```sh
+npm install
+```
+
+### 🧱 Step 2 — Build for Your Platform
+
+```sh
+npm run make
+```
+
+This creates a build for the current OS and outputs files in `/out/`.
+
+You can also build for a specific platform:
+
+```sh
+# Windows
+npm run make -- --platform win32 --arch x64
+
+# macOS
+npm run make -- --platform darwin --arch arm64
+
+# Linux
+npm run make -- --platform linux --arch x64
+```
+
+> 🧠 Requires that you're running the command on the target platform (e.g. macOS to build `.dmg`).
+
+---
+
+## 📦 Output
+
+After building, your production-ready files live in:
+
+```
+/out/make/<platform>/
+```
+
+Includes:
+
+* `.exe`, `.dmg`, or `.AppImage` installers
+* Optional `.zip`/`.tar.gz` portable builds
+
+---
+
+## 🔐 Code Signing (Optional)
+
+For production use, you may want to sign your builds:
+
+* **macOS**: Apple Developer ID cert + notarization
+* **Windows**: EV Code Signing Certificate
+
+Add signing credentials via:
+
+* Environment variables (`CSC_LINK`, `CSC_KEY_PASSWORD`)
+* Forge plugin config (e.g. `electron-forge-maker-squirrel` or `electron-notarize`)
+
+---
+
+## ✅ Summary
+
+| Task                            | Command                             |
+| ------------------------------- | ----------------------------------- |
+| Create GitHub release build     | `git tag v1.0.0 && git push --tags` |
+| Local build (current platform)  | `npm run make`                      |
+| Local build (specific platform) | `npm run make -- --platform=darwin` |
+| Output folder                   | `out/make/<platform>/`              |

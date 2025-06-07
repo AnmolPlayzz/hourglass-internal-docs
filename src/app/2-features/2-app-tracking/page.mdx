@@ -1,0 +1,102 @@
+# 📊 App Usage Tracking
+
+App usage tracking is a core feature that helps users understand where their time goes. The tracker records foreground apps and durations per session, then aggregates that data into daily/weekly stats.
+
+---
+
+## 🔍 What We Track
+
+- App name
+- App identifier (bundle/package name)
+- Start and end timestamps
+- Total time spent
+- Platform and device
+- App category (e.g., social, work, entertainment)
+
+---
+
+## 🧠 Aggregation
+
+Tracking data is grouped by:
+- **Day**
+- **App**
+- **Category**
+- **Device**
+
+Used in the dashboard to show:
+- Daily summaries
+- Weekly charts
+- Category breakdowns
+- Session-level analytics
+
+---
+
+## 🖥️ Desktop (Electron)
+
+- Uses `get-windows` to detect the **active window title** and **process name**
+- Polls foreground app every N seconds (default: 3–5s)
+- Uses platform-specific bindings:
+  - Windows: `GetForegroundWindow` + `GetWindowThreadProcessId`
+  - macOS: `NSWorkspace.shared.frontmostApplication`
+  - Linux: `xdotool`, `xprop`, or DBus (X11 only)
+
+**Edge Cases:**
+- Terminal apps and IDEs are grouped separately
+- Idle detection via lack of input events (mouse/keyboard)
+
+---
+
+## 📱 Mobile
+
+### Android
+- Uses **UsageStatsManager** to query app usage stats
+- Requires **Usage Access Permission**
+- Foreground app checked on interval
+- Also tracks unlock events and screen time
+
+**Note:** Some OEMs throttle background jobs; use foreground service if needed
+
+### iOS
+- Tracking limited due to Apple sandboxing
+- Can fetch **Screen Time** data via MDM or workaround profiles *(Enterprise tier only)*
+- Default behavior: local timer + pickup tracking + blocked app launches
+
+---
+
+## 🌐 Web (Browser Extension / Companion)
+
+- Tracks tabs and active websites using `chrome.tabs` + `chrome.idle`
+- URLs are bucketed into high-level categories (e.g., YouTube → "Entertainment")
+- Requires user permission and local storage access
+
+---
+
+## 📂 Storage Format (Local Example)
+
+```json
+{
+  "app": "Notion",
+  "id": "notion.app",
+  "duration": 1320,
+  "startedAt": "2025-06-07T10:24:00Z",
+  "category": "Work",
+  "platform": "macos"
+}
+```
+
+---
+
+## 🔄 Sync Notes
+
+- Local data is batched and synced to the backend
+- Conflicts resolved using timestamps + device ID
+- Free tier syncs raw per-device data
+- Paid tier merges multi-device usage into unified daily stats
+
+---
+
+## 🚧 Future Plans
+
+- Background tracking for split-screen apps
+- Web-based activity heatmap
+- Manual editing of false positives (e.g., app open but not in use)

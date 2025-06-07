@@ -1,0 +1,55 @@
+import Image from "next/image";
+export function Header() {
+    return <div style={{
+        width: "100%",
+        height: "300px",
+        position: "relative",
+        borderRadius: "20px",
+        overflow: "hidden",
+    }}>
+        <Image src={"/cover.png"} alt={"cover image"} fill={true} style={{
+            objectFit: "cover",
+            objectPosition: "center",
+            width: "100%",
+            height: "100%",
+        }} />
+    </div>
+}
+
+<Header />
+
+# The Hourglass project
+Welcome to the internal documentation for the **Hourglass Project** — a powerful, privacy-conscious tool to help users stay focused, track their time, and reduce distractions across **Windows, macOS, Linux, Android, and iOS**.
+
+---
+
+## 🚀 What This App Does
+
+- 📊 Tracks **screen time** per app and per device
+- 🧠 Measures **focus session quality** using distraction-based scoring
+- 🔒 Blocks distracting apps and websites during focus sessions
+- 🔄 Offers **cross-device sync** (optional via paid tier)
+- ✨ Provides **AI-powered summaries** of messages from apps like WhatsApp and Slack
+- 📈 Enterprise support with team-wide analytics and policies
+
+---
+
+## 📦 Platforms (Planned)
+
+- Windows ✅
+- macOS ✅
+- Linux 🟡 (core tracking only)
+- Android ✅
+- iOS 🟡 (limited control due to OS constraints)
+
+---
+
+## 🧱 Tech Stack (Planned)
+
+- **Frontend**: Electron (desktop), React Native (mobile)
+- **Backend**: Node.js + PostgreSQL + Redis
+- **Auth**: Auth0 or Supabase
+- **Sync**: WebSockets + REST API
+- **Blocking**: Native integrations per platform
+- **AI**: OpenAI API (optional)
+

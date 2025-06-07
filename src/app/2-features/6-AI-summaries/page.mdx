@@ -1,0 +1,84 @@
+# 🤖 AI Summaries
+
+AI Summaries provide a quick, human-readable reflection of each focus session. They’re generated after a session ends, based on usage patterns, distractions, and duration — helping users reflect without parsing raw stats.
+
+---
+
+## ✨ What It Does
+
+At the end of a focus session, the AI can generate a short summary that includes:
+
+- Session success/failure recap
+- Major distractions (apps/sites)
+- Overall focus quality
+- Encouraging tone (never judgmental)
+
+---
+
+## 📝 Sample Output
+
+> "Solid 45-minute session! You stayed focused for most of the time, except for a brief 2-minute scroll on Instagram. Great job avoiding pickups — just 1 unlock!"
+
+Or:
+
+> "Distractions got the best of you today. Chrome and Discord were open for 20% of the session. Maybe try enabling Strict Mode next time?"
+
+---
+
+## ⚙️ How It Works
+
+1. **Local summary context is generated** with:
+   - Focus duration
+   - App usage during session
+   - Pickup count
+   - Blocked app attempts
+   - Score
+
+2. **Small prompt payload** is sent to the AI server:
+   ```json
+   {
+     "duration": 2700,
+     "score": 64,
+     "apps": ["YouTube", "Discord"],
+     "pickups": 5,
+     "blockedHits": 2
+   }
+````
+
+3. AI responds with a single-paragraph session summary
+
+---
+
+## 🔐 Privacy & Safety
+
+* Only **anonymized usage metadata** is sent
+* No app content, screen data, or personal notes are transmitted
+* Entire system is opt-in, and summaries are stored locally unless sync is enabled
+
+---
+
+## 💼 Tier Availability
+
+| Tier       | Access                                   |
+| ---------- | ---------------------------------------- |
+| Free       | 1-line text summary (local-only)         |
+| Pro        | Enhanced summaries + multi-day recap     |
+| Enterprise | Optional batch analytics + team insights |
+
+---
+
+## 🌱 Future Features
+
+* Mood tagging (optional): user can tap to log how they felt
+* Weekly reflection digest (AI-generated)
+* Style preference: friendly / neutral / coach
+* Voice summaries (TTS)
+* Team AI reports for organizations
+
+---
+
+## 🧪 Developer Notes
+
+* Built on OpenAI / local LLM abstraction layer
+* Summaries are cached locally for offline viewing
+* Prompts are versioned for consistent tuning across sessions

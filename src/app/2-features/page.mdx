@@ -1,0 +1,37 @@
+# ✨ Features
+
+The Time Tracker App is built to help users focus, track their time across devices, and reduce digital distractions. This section documents the core features of the app — how they work, how they're implemented, and any platform-specific notes.
+
+---
+
+## 🔍 Feature Index
+
+### 🎯 [Focus Sessions](./2-features/1-focus-sessions)
+Start and end dedicated focus intervals. Tracks distractions, calculates focus scores, and optionally triggers app/site blocking.
+
+### 📊 [App Usage Tracking](./2-features/2-app-tracking)
+Records time spent per app across devices. Aggregates usage daily, weekly, and by category.
+
+### ⛔ [Distraction Blocking](./2-features/3-distraction-blocking)
+Blocks distracting apps and websites during focus sessions. Works differently per platform (native APIs, accessibility, extensions).
+
+### 🧠 [Focus Scoring](./2-features/4-scoring)
+Scores each session based on pickups, screen switches, and usage of blacklisted apps/sites.
+
+### 🔄 [Cross-Device Sync](./2-features/5-sync)
+Syncs usage and focus data across all platforms. Supports partial sync in free tier and unified analytics in paid version.
+
+### 💬 [AI Summaries](./2-features/6-AI-summaries)
+(Optional) Summarizes missed messages from apps like WhatsApp and Slack during focus time.
+
+---
+
+## 📌 Notes
+
+- Features are modular and toggleable per platform and tier.
+- Some advanced logic (like scoring or AI) may run on-device or be hybrid.
+- Privacy-first: All data sync and storage respects local-first principles, and no raw message data is stored.
+
+---
+
+Check individual pages for implementation details and APIs used.

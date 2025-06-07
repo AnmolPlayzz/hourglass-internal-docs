@@ -1,0 +1,64 @@
+.codeContainer {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1e1e1e;
+  border: 1px solid #333;
+}
+
+.languageLabel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #333;
+  color: #ccc;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom-left-radius: 4px;
+  z-index: 1;
+}
+
+.codeBlock {
+  margin: 0 !important;
+  padding: 1rem !important;
+  overflow-x: auto;
+  background: transparent !important;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  tab-size: 2 !important;
+}
+
+.codeContainer code {
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: inherit !important;
+  white-space: pre !important;
+  word-wrap: normal !important;
+  display: block;
+}
+
+/* Scrollbar styling for code blocks */
+.codeBlock::-webkit-scrollbar {
+  height: 8px;
+}
+
+.codeBlock::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.codeBlock::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.codeBlock::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}

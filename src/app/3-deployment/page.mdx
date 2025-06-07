@@ -1,0 +1,88 @@
+# 🚀 Deployment
+
+This section covers how to build and package Hourglass for production across all platforms.
+
+---
+
+## 📦 What's Included
+
+Each deployment guide will walk you through:
+
+- ✅ Building the app in production mode
+- 🏗 Packaging and bundling (Electron, mobile, web)
+- 🔐 Code signing (platform-specific)
+- 📤 Distribution (manual or store upload)
+- 🔄 Versioning and release channels
+
+---
+
+## 💻 Platforms
+
+- [Desktop (Electron)](./desktop.md) — Windows, macOS, and Linux installers  
+- [Android](./android.md) — APK builds, signing, and Play Store notes  
+- [iOS](./ios.md) — Xcode builds, profiles, and TestFlight/App Store  
+- [Browser Extension](./extension.md) — Build and publish for Chrome/Edge/Firefox  
+
+---
+
+### 📦 Versioning Explained
+
+Hourglass uses **semantic versioning** with optional pre-release tags.
+
+```text
+v MAJOR . MINOR . PATCH - LABEL
+```
+
+| Part     | Example     | Meaning                                       |
+| -------- | ----------- | --------------------------------------------- |
+| `MAJOR`  | `1.0.0`     | Breaking changes. Resets `MINOR` and `PATCH`. |
+| `MINOR`  | `0.1.0`     | New features (non-breaking). Resets `PATCH`.  |
+| `PATCH`  | `0.0.5`     | Fixes or small improvements.                  |
+| `-LABEL` | `-prealpha` | Optional pre-release label (explained below). |
+
+---
+
+### 🔖 Pre-release Labels
+
+Use these labels to indicate development stage before final release.
+
+| Label       | When to Use                                  | Stability          |
+| ----------- | -------------------------------------------- | ------------------ |
+| `-prealpha` | Initial rough builds, unstable, experimental | 🚧 Very unstable   |
+| `-alpha`    | First internal feature-complete version      | ⚠️ Unstable        |
+| `-beta`     | Usable, still under testing                  | 🧪 Somewhat stable |
+| `-rc`       | “Release candidate” for final testing        | ✅ Nearly stable    |
+| *(none)*    | Official public release                      | 🎉 Stable          |
+
+---
+
+### 🧠 Examples
+
+| Version           | Description                                   |
+| ----------------- | --------------------------------------------- |
+| `v0.0.1-prealpha` | First test build with barely working features |
+| `v0.1.0-alpha`    | Feature-complete for internal dogfooding      |
+| `v0.1.3-beta`     | Bug-fixed beta shared with early users        |
+| `v1.0.0-rc`       | Ready-to-release, pending final tests         |
+| `v1.0.0`          | Stable public release                         |
+| `v1.1.0`          | Added new features (e.g., new sync options)   |
+| `v1.1.2`          | Fixed bugs (e.g., sync delay issue)           |
+
+---
+
+## 🔒 Notes on Production Builds
+
+- All analytics & AI services are opt-in and disabled by default
+- No personal user data is bundled or leaked in production
+- You can audit the production bundle using `source-map-explorer`
+
+---
+
+## 📘 Next Steps
+
+Choose a platform to get started:
+
+- [Desktop Deployment →](./3-deployment/1-desktop.md)
+- [Android Deployment →](./android.md) `[WIP]`
+- [iOS Deployment →](./ios.md) `[WIP]`
+- [Browser Extension Deployment →](./extension.md) `[WIP]`

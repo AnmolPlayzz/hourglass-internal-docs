@@ -1,0 +1,83 @@
+# 🎯 Focus Sessions
+
+Focus sessions are dedicated periods where the user commits to deep work. During a session, the app tracks distractions, scores the user’s performance, and optionally blocks apps/websites that reduce focus.
+
+---
+
+## 🔧 Core Behaviors
+
+- Users manually start and end a session
+- Session metadata:
+  - Start time / end time
+  - Device used
+  - Duration goal (optional)
+- Real-time feedback (timer, score progress)
+- Option to enable “Distraction Blocking” during session
+- Optional Pomodoro mode (planned)
+
+---
+
+## 📊 What Gets Tracked
+
+During a session, we track:
+
+- **App switches**
+- **Device unlocks / screen pickups**
+- **Usage of blacklisted apps or sites**
+- **Idle time** (no user input for X seconds)
+- **Session completion** vs rage quits
+
+These metrics are used by the [Scoring Engine](/scoring).
+
+---
+
+## ⛔ Optional: Blocking Mode
+
+When enabled, distraction-blocking kicks in:
+
+- On **desktop**: blocks via overlay or accessibility APIs
+- On **Android**: uses AccessibilityService to block apps
+- On **iOS**: limited to focus reminders due to OS restrictions
+
+---
+
+## 🧠 Planned Features
+
+- Pomodoro mode with short/long breaks
+- Session reminders (start time, overdue breaks)
+- Stats dashboard: average duration, consistency
+- Tagging sessions by purpose (e.g., study, work, read)
+
+---
+
+## ⚙️ Developer Notes
+
+- Focus sessions are stored locally first, then synced
+- Events are batched and sent to the server every N seconds
+- `Strict Mode` toggles whether early exits count as failed
+- Ending a session triggers score computation and optional AI summary fetch
+
+---
+
+## 💡 Example Flow (Pseudocode)
+
+```ts
+startFocusSession(goalDurationMs, options);
+  startTimer();
+  startTrackingDistractions();
+  if (options.blocking) {
+    enableBlockingLayer();
+  }
+
+endFocusSession();
+  stopTimer();
+  stopTracking();
+  disableBlocking();
+  calculateScore();
+  syncSessionToCloud();
+````
+
+---
+
+> Focus sessions are the heartbeat of the app — everything else (scoring, tracking, syncing) is centered around them.
+

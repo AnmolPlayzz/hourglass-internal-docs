@@ -1,0 +1,109 @@
+# 🔄 Cross-Device Sync
+
+Hourglass supports syncing your usage, focus sessions, and distraction data across devices — securely and with respect for privacy. It powers unified analytics, backup, and insights across mobile and desktop.
+
+---
+
+## 🧠 What Gets Synced
+
+The following data types are eligible for sync:
+
+- ⏱️ Focus session history
+- 📊 App usage data
+- 🚫 Blocked app/site violations
+- 🧠 Focus scores
+- ⚙️ User preferences (e.g. blocking settings, categories)
+- 📅 Session streaks & stats
+- 💬 (Optional) AI summaries metadata
+
+---
+
+## 🧱 Sync Architecture
+
+- Each device generates a **local event stream** (append-only)
+- Sync client batches and uploads events to server
+- Server deduplicates + merges based on:
+  - `deviceId`
+  - `timestamp`
+  - `eventType`
+
+Synced data is **readable across devices**, but **writes are always local-first** and eventually consistent.
+
+---
+
+## 🔐 Data Security
+
+- All sync is end-to-end encrypted
+- No raw message or screen content is ever uploaded
+- Sync servers store only:
+  - Hashed device ID
+  - Timestamped usage metadata
+  - Optional AI summary outputs (if enabled)
+
+Users can opt out entirely and stay local-only.
+
+---
+
+## 🎯 Free vs Paid Sync
+
+| Tier       | Features                                                                 |
+|------------|--------------------------------------------------------------------------|
+| **Free**   | Per-device tracking, local stats, limited backup                         |
+| **Pro**    | Unified cross-device view, daily sync, combined analytics, cloud backup  |
+| **Enterprise** | Admin dashboards, bulk org sync, enforced policies, priority support    |
+
+---
+
+## 🔄 Sync Frequency
+
+| Platform   | Method               | Sync Interval         |
+|------------|----------------------|------------------------|
+| Desktop    | Background daemon    | Every 2–5 minutes      |
+| Android    | Foreground service   | Every 3–10 minutes     |
+| iOS        | Manual only (due to iOS restrictions) |
+| Browser    | Extension polling or push | Every tab switch / 5–10 mins |
+
+> If the app is offline, it queues sync events and retries on reconnect.
+
+---
+
+## 📂 Event Payload Format
+
+```json
+{
+  "deviceId": "macbook-02",
+  "type": "focus_session",
+  "startedAt": "2025-06-07T10:12:00Z",
+  "duration": 2700,
+  "score": 86,
+  "syncedAt": "2025-06-07T10:45:04Z"
+}
+````
+
+---
+
+## ⚙️ Sync Conflicts
+
+Conflicts (e.g., overlapping sessions on two devices) are resolved by:
+
+1. Preferring completed sessions
+2. Merging app usage if timestamps don’t collide
+3. Notifying the user (in paid tier only)
+
+---
+
+## 🚧 Planned Enhancements
+
+* End-to-end device linking with QR codes
+* Full activity timeline view across all devices
+* Sync health diagnostics panel
+* Optional encrypted cloud export (JSON, CSV)
+
+---
+
+## 🧭 Developer Notes
+
+* Sync module is modular; can be swapped for local-only mode
+* Works over HTTP(S) + WebSocket fallback
+* Retry logic uses exponential backoff with jitter
+

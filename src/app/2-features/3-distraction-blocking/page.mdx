@@ -1,0 +1,111 @@
+# ⛔ Distraction Blocking
+
+Distraction Blocking is a core feature of Hourglass that helps users stay focused by actively preventing access to selected apps or websites during a focus session.
+
+It’s designed to be respectful yet strict — enforcing rules based on user-defined blocklists, session mode, and platform capabilities.
+
+---
+
+## 🎯 What It Does
+
+When enabled:
+- Blocks **apps** and/or **websites** from launching or staying in the foreground
+- Warns or forcibly redirects user attempts
+- Logs blocked attempts for scoring
+- Works only during focus sessions or in scheduled blocks
+
+---
+
+## 📱 Platform-Specific Implementation
+
+### 🖥️ Desktop (Windows/macOS/Linux)
+
+- Built using Electron + native bindings
+- Uses active window polling + accessibility APIs
+- If a blacklisted app is detected:
+  - Shows fullscreen overlay or popup
+  - Plays optional haptic/audio nudge
+- Maintains a local blocklist (stored per platform)
+
+**Windows:**  
+- Uses `GetForegroundWindow()` to detect active app  
+- Optionally kills process (Strict Mode)
+
+**macOS:**  
+- Uses `NSWorkspace.shared.frontmostApplication`  
+- Optionally forces app switch to safe app
+
+**Linux:**  
+- X11 support only (via `xdotool`, `wmctrl`)  
+- Limited support on Wayland
+
+---
+
+### 📱 Android
+
+- Uses Accessibility Service to:
+  - Detect foreground app
+  - Draw blocking overlay when blocked app opens
+- Works even in full-screen apps
+- Requires **Accessibility + Usage Access** permissions
+
+**Strict Mode:** Optionally force-redirects to home screen  
+**Silent Mode:** Just logs the violation, no block UI
+
+---
+
+### 📱 iOS
+
+Due to Apple restrictions:
+- No true blocking is possible without MDM
+- Instead:
+  - Sends **distraction reminders**
+  - Hides notifications
+  - Uses **Shortcut automation** or **Focus Mode** APIs
+- Optional ScreenTime integration via enterprise profile *(Enterprise only)*
+
+---
+
+### 🌐 Websites (Browser Extension)
+
+- Uses `chrome.webRequest` + `chrome.tabs` APIs
+- Blocks navigation to blacklisted domains
+- Can auto-close tabs or replace with "Back to Focus" screen
+- Works across all Chromium browsers (Firefox planned)
+
+---
+
+## 🧠 Blocking Modes
+
+| Mode          | Behavior                                      |
+|---------------|-----------------------------------------------|
+| ✋ Soft        | Shows warning or nudge (non-blocking)         |
+| ⛔ Strict      | Forces close / redirects from distractions    |
+| 🤫 Silent      | Logs silently, no UI                          |
+| 🧱 Scheduled   | Enables blocking during fixed time windows    |
+
+---
+
+## 🔧 User Config
+
+Users can:
+- Set per-platform blocklists
+- Toggle distraction categories (e.g. “Social Media”)
+- Schedule daily blocking windows
+- Enable/disable Strict Mode per device
+
+---
+
+## 🔐 Privacy & Safety
+
+- All blocking happens **locally** — no cloud intervention
+- App never records screen content
+- On mobile, overlays are transparent and dismissible by force-quit
+
+---
+
+## 📈 Future Ideas
+
+- Smart detection using screen OCR (local only)
+- Adaptive blocklist suggestions (AI)
+- Collaborative blocklists (for accountability mode)

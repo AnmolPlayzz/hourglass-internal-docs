@@ -1,0 +1,106 @@
+# 🧠 Focus Scoring
+
+Focus Scoring is how the app evaluates the quality of a user’s focus session. It helps users reflect on their performance and improve focus habits over time.
+
+The score is based on app usage, distractions, pickups, idle time, and completion status.
+
+---
+
+## 🎯 What the Score Measures
+
+Each session is scored from **0 to 100**, based on:
+
+| Metric                     | Impact                            |
+|---------------------------|------------------------------------|
+| ✅ Session Completed       | +15–20 points                      |
+| 📵 App Switches            | -X per switch (to blocked apps)    |
+| 🔓 Device Pickups/Unlocks  | -X per unlock                      |
+| ⌛ Idle Time               | -X after Y seconds of inactivity   |
+| 🚫 Blocked App Usage       | Heavy penalty                      |
+| ⏱️ Total Duration         | Bonus for long, completed sessions |
+
+---
+
+## 🧪 Formula (Simplified)
+
+```ts
+let score = 100;
+
+if (!completedSession) score -= 20;
+
+score -= appSwitches * 1.5;
+score -= pickups * 2;
+score -= blockedAppMinutes * 5;
+score -= idleTimeMinutes * 1;
+
+if (sessionDuration >= 60) score += 10; // bonus
+
+score = clamp(score, 0, 100);
+````
+
+> All numbers are tunable per platform and mode.
+
+---
+
+## ⚙️ Platform Integration
+
+### Desktop
+
+* Gets app switch data from active window polling
+* Idle time from input inactivity (keyboard/mouse)
+* Block violations from overlay triggers
+
+### Android
+
+* Pulls unlocks from `ACTION_USER_PRESENT`
+* Foreground app usage via UsageStats
+* Screen-off time as idle detection
+
+### iOS
+
+* Very limited: screen pickups, timers, and blocked attempt counts (no granular tracking without MDM)
+
+---
+
+## 🧩 Configurable Parameters
+
+Each session can adjust sensitivity:
+
+* 📉 App switch penalty: mild/normal/strict
+* 🕒 Idle timeout threshold: 1–5 minutes
+* ✅ Completion bonus toggle
+* 🔥 Blocked app penalty multiplier
+* 🧘 Chill Mode: disables scoring entirely (for journaling, light work)
+
+---
+
+## 📊 After-Session Feedback
+
+At the end of a focus session, users see:
+
+* Final score (0–100)
+* Time focused vs. distracted
+* Breakdown chart of:
+
+  * App switches
+  * Pickups
+  * Idle time
+  * Blocked app hits
+* Emoji mood scale or animated feedback (planned)
+
+---
+
+## 🔒 Privacy Notes
+
+* All scoring is done **locally** (offline)
+* No raw app usage is sent to the cloud unless sync is enabled
+* Scoring logic can be reviewed (open-source friendly)
+
+---
+
+## 🔮 Future Additions
+
+* Weekly average score trend
+* AI-generated insights (“You tend to lose focus at 3PM”)
+* Social accountability leaderboard (opt-in)
+* Bonus for not touching phone at all
