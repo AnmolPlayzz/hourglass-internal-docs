@@ -1,0 +1,25 @@
+# 🧠 AI-Powered Distraction Detection
+
+Tymli uses AI to intelligently decide whether the user's **current active window** aligns with their **short-term goal** and assigned tasks — allowing for **adaptive distraction blocking** during focus sessions.
+
+---
+
+## 🎯 How It Works
+
+When a focus session is started, users can optionally specify:
+
+- A **short-term goal** (e.g. "Finish report", "Study for exam")
+- One or more **assigned tasks** (e.g. `Write Introduction.md`, `Review PR #42`)
+
+The AI model continuously evaluates the **active window title, app name, and context** to determine if the activity is *goal-aligned* or a *distraction*.
+
+---
+
+## 🔍 Detection Pipeline
+
+```txt
+1. User starts session with short-term goal
+2. AI maps goal → intent → allowed context
+3. Active window is monitored in real-time
+4. If window doesn't match expected context:
+   → Trigger warning / block (based on blocking mode)

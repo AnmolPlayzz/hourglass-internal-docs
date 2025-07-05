@@ -26,7 +26,7 @@ export default function Navbar({children}: { children?: React.ReactNode }) {
                         position: "relative",
                         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)"
                     }}>
-                        <Image src={"/hourglass.svg"} alt={"Hourglass Logo"} fill style={{objectFit: "contain"}}/>
+                        <Image src={"/hourglass.svg"} alt={"Tymli Logo"} fill style={{objectFit: "contain"}}/>
                     </div>
                     <h1 style={{fontSize: "18px", fontWeight: 300, margin: 0}}>HG // <span style={{fontWeight: 800}}>Internal Docs</span></h1>
                 </div>
@@ -34,7 +34,7 @@ export default function Navbar({children}: { children?: React.ReactNode }) {
             <div className={styles.rightContent}>
                 {/*Desktop*/}
                 <div className={styles.linkContainer}>
-                    <a className={styles.link} href={"https://github.com/Hourglass-Inc/desktop"} target={"_blank"}>
+                    <a className={styles.link} href={"https://github.com/Tymli-Inc/desktop"} target={"_blank"}>
                         Desktop <MdArrowOutward/>
                     </a>
                 </div>
